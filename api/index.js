@@ -34,3 +34,15 @@ app.listen(3000, () => {
 // Best Method after creating a route folder and file for user
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
+
+// Adding middleware
+app.use((err, req, res, next) => {
+  // add statusCode
+  const statusCode = err.statusCode || 500;
+  const message = err.message || 'Internal Server Error';
+  res.status(statusCode).json({
+    success: false,
+    statusCode,
+    message,
+  })
+})
