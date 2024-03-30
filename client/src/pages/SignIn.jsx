@@ -1,14 +1,19 @@
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector} from "react-redux";
+import { signInStart, signInSuccess, signInFailure } from "../redux/user/userSlice";
 
 export default function SignIn() {
   // create a state to handle the form data
   const [formData, setFormData] = useState({});
   // state for loading errors
-  const [errorMessage, setErrorMessage] = useState(null);
-  // state for loading errors
-  const [loading, setLoading] = useState(false);
+  // const [errorMessage, setErrorMessage] = useState(null);
+  // // state for loading errors
+  // const [loading, setLoading] = useState(false);
+   const {loading, error:errorMessage} = useSelector(state => state.user);
+  // initialize useDispatch
+  const dispatch = useDispatch();
   // to navigate the user to the next page after successful signIn
   const navigate = useNavigate();
 
@@ -20,13 +25,15 @@ export default function SignIn() {
     e.preventDefault();
     // create an error if one of the forms is not filled up before submission
     if (!formData.email || !formData.password) {
-      return setErrorMessage("Please fill out all fields");
+      // return setErrorMessage("Please fill out all fields");
+      return dispatch(signInFailure("Please fill out all fields"));
     }
     try {
-      // for loading effect
-      setLoading(true);
-      // if there's an error for the previous request
-      setErrorMessage(null);
+      // // for loading effect
+      // setLoading(true);
+      // // if there's an error for the previous request
+      // setErrorMessage(null);
+      dispatch(signInStart());
       const res = await fetch("/api/auth/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -35,19 +42,22 @@ export default function SignIn() {
       const data = await res.json();
       // Error if username or email has already been used
       if (data.success === false) {
-        return setErrorMessage(data.message);
+        // return setErrorMessage(data.message);
+        dispatch(signInFailure(data.message));
       }
-      // if form is working correctly
-      setLoading(false);
+      // // if form is working correctly
+      // setLoading(false);
       // condition to navigate user after successful signup
       if(res.ok) {
+        dispatch(signInSuccess(data));
         navigate('/');
       }
       // error message based on internet connection
     } catch (error) {
-      setErrorMessage(error.message);
-      // if there's an error
-      setLoading(false);
+      // setErrorMessage(error.message);
+      // // if there's an error
+      // setLoading(false);
+      dispatch(signInFailure(error.message));
     }
   };
 
