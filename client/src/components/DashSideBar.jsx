@@ -17,7 +17,7 @@ export default function DashSideBar() {
     <Sidebar className="w-full md:w-56">
       <Sidebar.Items>
         <Sidebar.ItemGroup>
-          <Link to="/dashboard?profile">
+          <Link to="/dashboard?tab=profile">
             <Sidebar.Item
               active={tab === "profile"}
               icon={HiUser}
