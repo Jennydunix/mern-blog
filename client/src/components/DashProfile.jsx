@@ -1,17 +1,17 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Alert, Button, TextInput } from 'flowbite-react';
-import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+/* eslint-disable no-unused-vars */
+import { Alert, Button, TextInput } from "flowbite-react";
+import { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import {
   getDownloadURL,
   getStorage,
   ref,
   uploadBytesResumable,
-} from 'firebase/storage';
-import { app } from '../firebase';
-import { CircularProgressbar } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
+} from "firebase/storage";
+import { app } from "../firebase";
+import { CircularProgressbar } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 export default function DashProfile() {
   const { currentUser } = useSelector((state) => state.user);
@@ -40,16 +40,15 @@ export default function DashProfile() {
     const storageRef = ref(storage, fileName);
     const uploadTask = uploadBytesResumable(storageRef, imageFile);
     uploadTask.on(
-      'state_changed',
+      "state_changed",
       (snapshot) => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-
         setImageFileUploadProgress(progress.toFixed(0));
       },
       (error) => {
         setImageFileUploadError(
-          'Could not upload image (File must be less than 2MB)'
+          "Couldn't upload image (File must be less than 2MB)"
         );
         setImageFileUploadProgress(null);
         setImageFile(null);
@@ -63,18 +62,18 @@ export default function DashProfile() {
     );
   };
   return (
-    <div className='max-w-lg mx-auto p-3 w-full'>
-      <h1 className='my-7 text-center font-semibold text-3xl'>Profile</h1>
-      <form className='flex flex-col gap-4'>
+    <div className="max-w-lg mx-auto p-3 w-full">
+      <h1 className="my-7 text-center font-semibold text-3xl ">Profile</h1>
+      <form className="flex flex-col gap-4">
         <input
-          type='file'
-          accept='image/*'
+          type="file"
+          accept="image/*"
           onChange={handleImageChange}
           ref={filePickerRef}
           hidden
         />
         <div
-          className='relative w-32 h-32 self-center cursor-pointer shadow-md overflow-hidden rounded-full'
+          className="relative w-32 h-32 self-center cursor-pointer shadow-md overflow-hidden rounded-full"
           onClick={() => filePickerRef.current.click()}
         >
           {imageFileUploadProgress && (
@@ -84,9 +83,9 @@ export default function DashProfile() {
               strokeWidth={5}
               styles={{
                 root: {
-                  width: '100%',
-                  height: '100%',
-                  position: 'absolute',
+                  width: "100%",
+                  height: "100%",
+                  position: "absolute",
                   top: 0,
                   left: 0,
                 },
@@ -100,30 +99,34 @@ export default function DashProfile() {
           )}
           <img
             src={imageFileUrl || currentUser.profilePicture}
-            alt='user'
-            className={`rounded-full w-full h-full object-cover border-8 border-[lightgray] ${
-              imageFileUploadProgress &&
-              imageFileUploadProgress < 100 &&
-              'opacity-60'
-            }`}
+            alt="user"
+            className={`rounded-full w-full h-full object-cover border-8 border-[light-gray] ${imageFileUploadProgress && imageFileUploadProgress < 100 && 'opacity-60'}`}
           />
         </div>
         {imageFileUploadError && (
-          <Alert color='failure'>{imageFileUploadError}</Alert>
+          <Alert color="failure">{imageFileUploadError}</Alert>
         )}
         <TextInput
-          type='text'
-          id='username'
-          />
-          <TextInput type='password' id='password' placeholder='password' />
-          <Button type='submit' gradientDuoTone='purpleToBlue' outline>
-            Update
-          </Button>
-        </form>
-        <div className='text-red-500 flex justify-between mt-5'>
-          <span className='cursor-pointer'>Delete Account</span>
-          <span className='cursor-pointer'>Sign Out</span>
-        </div>
+          type="text"
+          id="username"
+          placeholder="username"
+          defaultValue={currentUser.username}
+        />
+        <TextInput
+          type="email"
+          id="email"
+          placeholder="email"
+          defaultValue={currentUser.email}
+        />
+        <TextInput type="text" id="password" placeholder="password" />
+        <Button type="submit" gradientDuoTone="purpleToBlue" outline>
+          Update
+        </Button>
+      </form>
+      <div className="text-red-500 flex justify-between mt-5">
+        <span className="cursor-pointer">Delete Account</span>
+        <span className="cursor-pointer">Sign Out</span>
       </div>
-    );
-  }
+    </div>
+  );
+}
