@@ -59,7 +59,7 @@ export const signin = async (req, res, next) => {
     }
     // If both password and user are valid, authenticate the user
     // creating a token
-    const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ id: validUser._id, isAdmin: validUser.isAdmin}, process.env.JWT_SECRET);
     // hide hashed password
     const { password: pass, ...rest } = validUser._doc;
     // add token to cookie
@@ -81,7 +81,7 @@ export const google = async (req, res, next) => {
     const user = await User.findOne({ email });
     if (user) {
       const token = jwt.sign(
-        { id: user._id, isAdmin: user.isAdmin },
+        { id: user._id, isAdmin: user.isAdmin},
         process.env.JWT_SECRET
       );
       const { password, ...rest } = user._doc;
