@@ -8,7 +8,7 @@ export default function CallToAction() {
                 Want to learn more about Me?
             </h2>
             <p className='text-gray-500 my-2'>
-                Checkout my LinkedIn Profile on the button below 
+                Go to my LinkedIn Profile on the button below 
             </p>
             <Button gradientDuoTone='purpleToPink' className='rounded-tl-xl rounded-bl-none'>
                 <a href="https://www.linkedin.com/in/jennifer-odunze" target='_blank' rel='noopener noreferrer'>
