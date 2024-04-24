@@ -104,16 +104,18 @@ export default function CreatePost() {
               setFormData({ ...formData, category: e.target.value })
             }
           >
-            <option value="uncategorized">Select a category</option>
-            <option value="webdevelopment">Web Development</option>
-            <option value="techadventures">Tech Adventures</option>
-            <option value="insights&trends">Insights & Trends</option>
-            <option value="projects&tutorials">Projects & Tutorials</option>
-            <option value="personalgrowth&learning">Personal Growth & Learning</option>
-            <option value="techforgood">Tech for Good</option>
-            <option value="productivity&tools">Productivity & Tools</option>
-            <option value="womenintech">Women in Tech</option>
-            <option value="q&a&interviews">Q&A & Interviews</option>
+           <option value="uncategorized">Select a category</option>
+              <option value="webdevelopment">Web Development</option>
+              <option value="techadventures">Tech Adventures</option>
+              <option value="insightsandtrends">Insights and Trends</option>
+              <option value="projectsandtutorials">Projects & Tutorials</option>
+              <option value="personalgrowth">
+                Personal Growth & Learning
+              </option>
+              <option value="techforgood">Tech for Good</option>
+              <option value="productivityandtools">Productivity & Tools</option>
+              <option value="womenintech">Women in Tech</option>
+              <option value="interviews">Interviews</option>
           </Select>
         </div>
         <div className="flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3">
